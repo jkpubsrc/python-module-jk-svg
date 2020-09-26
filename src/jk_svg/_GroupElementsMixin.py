@@ -10,6 +10,7 @@ from .SVGCircle import SVGCircle
 from .SVGRect import SVGRect
 from .SVGPolygon import SVGPolygon
 from .SVGPolyline import SVGPolyline
+from .SVGPath import SVGPath
 
 
 
@@ -21,6 +22,12 @@ class _GroupElementsMixin:
 		assert tagName
 
 		ret = SVGElement(tagName)
+		self._children.append(ret)
+		return ret
+	#
+
+	def createPath(self) -> SVGPath:
+		ret = SVGPath()
 		self._children.append(ret)
 		return ret
 	#

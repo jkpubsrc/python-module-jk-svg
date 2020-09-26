@@ -7,6 +7,8 @@ import inspect
 import jk_typing
 import jk_hwriter
 
+from .BoundingBox import BoundingBox
+
 
 
 
@@ -31,6 +33,16 @@ class AbstractSVGElement(object):
 	#
 
 	@property
+	def id(self) -> str:
+		return self._attributes.get("id", 0)
+	#
+
+	@id.setter
+	def id(self, v:float):
+		self._attributes["id"] = v
+	#
+
+	@property
 	def tagName(self) -> str:
 		return self._tagName
 	#
@@ -52,7 +64,7 @@ class AbstractSVGElement(object):
 
 	def move(self, dx:float, dy:float):
 		if self._moveCallback:
-			self._moveCallback(dy, dy)
+			self._moveCallback(dx, dy)
 		for c in self._children:
 			c.move(dx, dy)
 	#
@@ -63,8 +75,17 @@ class AbstractSVGElement(object):
 		return str(w)
 	#
 
+	def cleanAttributes(self):
+		for key in list(self._attributes.keys()):
+			a = self._attributes[key]
+			if (a is None) or (a is ""):
+				del self._attributes[key]
+	#
+
 	@jk_typing.checkFunctionSignature()
 	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True):
+
+		self.cleanAttributes()
 
 		if bPretty:
 			if self._attributes:
@@ -116,7 +137,7 @@ class AbstractSVGElement(object):
 				w.write("/>")
 	#
 
-	def getBoundingBox(self) -> typing.Union[tuple,None]:
+	def getBoundingBox(self) -> typing.Union[BoundingBox,None]:
 		allX = []
 		allY = []
 		for px, py in self.getBoundingPoints():
@@ -124,7 +145,7 @@ class AbstractSVGElement(object):
 			allY.append(py)
 
 		if allX:
-			return min(allX), min(allY), max(allX), max(allY)
+			return BoundingBox(min(allX), min(allY), max(allX), max(allY))
 		else:
 			return None
 	#

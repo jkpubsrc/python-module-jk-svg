@@ -1,11 +1,13 @@
 ﻿
 
 
-__version__ = "0.2020.9.25"
+__version__ = "0.2020.9.26"
 
 
 
 from .PointsList import PointsList
+
+from .BoundingBox import BoundingBox
 
 from ._AttrMixinCXCY import _AttrMixinCXCY
 from ._AttrMixinPoints import _AttrMixinPoints
@@ -26,11 +28,11 @@ from .SVGCircle import SVGCircle
 from .SVGRect import SVGRect
 from .SVGPolygon import SVGPolygon
 from .SVGPolyline import SVGPolyline
+from .SVGPath import SVGPath
 
 from .SVGGroup import SVGGroup
 
 from .SVGGraphic import SVGGraphic
-
 
 
 
