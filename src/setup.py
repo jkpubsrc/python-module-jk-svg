@@ -23,7 +23,7 @@ setup(
 		"License :: OSI Approved :: Apache Software License",
 	],
 	description = "This python module implements a set of classes for easy programmatic create of SVG graphics.",
-	download_url = "https://github.com/jkpubsrc/python-modules-jk-svg/tarball/0.2020.9.25",
+	download_url = "https://github.com/jkpubsrc/python-modules-jk-svg/tarball/0.2020.9.26",
 	include_package_data = False,
 	install_requires = [
 	],
@@ -36,7 +36,7 @@ setup(
 		"jk_svg",
 	],
 	url = "https://github.com/jkpubsrc/python-modules-jk-svg",
-	version = "0.2020.9.25",
+	version = "0.2020.9.26",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",
