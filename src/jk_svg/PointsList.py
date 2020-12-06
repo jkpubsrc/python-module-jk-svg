@@ -26,36 +26,36 @@ class PointsList(list):
 
 	def extend(self, iterable):
 		for value in iterable:
-			assert isinstance(value, tuple)
-			assert len(value) == 2
-			super().append(value)
+			if isinstance(value, list):
+				value = tuple(value)
+			else:
+				assert isinstance(value, tuple)
+			assert len(value) >= 2
+			super().append(value[:2])
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["points"] = str(self)
-	#
-
-	def remove(self, value):
-		ret = super().remove(value)
-
-		if self._connectedSVGControl is not None:
-			self._connectedSVGControl.attributes["points"] = str(self)
-
-		return ret
 	#
 
 	def append(self, value):
-		assert isinstance(value, tuple)
-		assert len(value) == 2
-		super().append(value)
+		if isinstance(value, list):
+			value = tuple(value)
+		else:
+			assert isinstance(value, tuple)
+		assert len(value) >= 2
+		super().append(value[:2])
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["points"] = str(self)
 	#
 
 	def insert(self, index, value):
-		assert isinstance(value, tuple)
-		assert len(value) == 2
-		super().insert(index, value)
+		if isinstance(value, list):
+			value = tuple(value)
+		else:
+			assert isinstance(value, tuple)
+		assert len(value) >= 2
+		super().insert(index, value[:2])
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["points"] = str(self)
@@ -78,10 +78,17 @@ class PointsList(list):
 	#
 
 	def remove(self, value):
-		super().remove(value)
+		if isinstance(value, list):
+			value = tuple(value)
+		else:
+			assert isinstance(value, tuple)
+		assert len(value) >= 2
+		super().remove(value[:2])
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["points"] = str(self)
+
+		return ret
 	#
 
 	def reverse(self):
@@ -112,9 +119,12 @@ class PointsList(list):
 	#
 
 	def __setitem__(self, index, value):
-		assert isinstance(value, tuple)
-		assert len(value) == 2
-		super().__setitem__(index, value)
+		if isinstance(value, list):
+			value = tuple(value)
+		else:
+			assert isinstance(value, tuple)
+		assert len(value) >= 2
+		super().__setitem__(index, value[:2])
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["points"] = str(self)

@@ -1,4 +1,4 @@
-﻿jk_svg
+jk_svg
 ==========
 
 Introduction

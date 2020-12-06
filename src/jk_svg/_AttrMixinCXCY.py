@@ -22,6 +22,21 @@ class _AttrMixinCXCY:
 	#
 
 	@property
+	def _xy(self) -> tuple:
+		return self._attributes.get("cx", 0), self._attributes.get("cy", 0)
+	#
+
+	@_xy.setter
+	def _xy(self, value:tuple):
+		assert isinstance(value, (list,tuple))
+		assert len(value) >= 2
+		assert isinstance(value[0], (int,float))
+		assert isinstance(value[1], (int,float))
+		self._attributes["cx"] = value[0]
+		self._attributes["cy"] = value[1]
+	#
+
+	@property
 	def cx(self) -> float:
 		return self._attributes.get("cx", 0)
 	#

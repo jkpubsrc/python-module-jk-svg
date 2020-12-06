@@ -62,6 +62,12 @@ class _GroupElementsMixin:
 		return ret
 	#
 
+	def createPolyline(self) -> SVGPolyline:
+		ret = SVGPolyline()
+		self._children.append(ret)
+		return ret
+	#
+
 #
 
 

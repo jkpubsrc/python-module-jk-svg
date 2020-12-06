@@ -1,7 +1,7 @@
 ﻿
 
 
-__version__ = "0.2020.9.26"
+__version__ = "0.2020.12.6"
 
 
 
@@ -33,8 +33,6 @@ from .SVGPath import SVGPath
 from .SVGGroup import SVGGroup
 
 from .SVGGraphic import SVGGraphic
-
-
 
 
 

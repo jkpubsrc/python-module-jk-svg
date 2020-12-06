@@ -1,35 +1,37 @@
 {
-	"language": "python3",
-	"name": "jk_svg",
-	"version": "0.2020.9.26",
+	"magic": {
+		"magic": "packageinfo",
+		"version": 2
+	},
 	"meta": {
-		"description": "This python module implements a set of classes for easy programmatic create of SVG graphics.",
+		"authors": [
+			{
+				"email": "pubsrc@binary-overflow.de",
+				"name": "J\u00fcrgen Knauth"
+			}
+		],
+		"description": "This python module implements a set of classes for simple programmatic creation of SVG graphics.",
+		"development_status": "stable",
 		"keywords": [
 			"svg"
 		],
-		"license": "Apache 2.0",
-		"development_status": "alpha",
-		"authors": [
-			{
-				"name": "Jürgen Knauth",
-				"email": "pubsrc@binary-overflow.de"
-			}
-		],
-		"wiki": {
-			"page": "DevDocs:jk_svg"
-		}
+		"language": "python3",
+		"license": "Apache2",
+		"name": "jk_svg",
+		"packageClass": "python-module",
+		"version": "0.2020.12.6",
 	},
 	"repositories": [
 		{
+			"devon_publish": true,
+			"project": "python-module-jk-sysinfo",
 			"type": "github",
-			"user": "jkpubsrc",
-			"project": "python-modules-jk-svg",
-			"devon_publish": false
+			"user": "jkpubsrc"
 		},
 		{
-			"type": "pypi",
-			"project": "jk_svg",
-			"devon_publish": false
+			"devon_publish": true,
+			"project": "jk-sysinfo",
+			"type": "pypi"
 		}
 	],
 	"source": {
@@ -45,7 +47,11 @@
 		"python_packages": [
 		],
 		"python_packages_dev": [
+		],
+		"system_apt_packages": [
 		]
-	}
+	},
+	"documentation": [
+	]
 }
 
