@@ -7,3 +7,4 @@ examples/**/__pycache__/
 .vscode
 examples/*.log
 experiments/
+testing/*.py.svg
