@@ -5,15 +5,12 @@ import jk_typing
 import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
-from .SVGLine import SVGLine
-from .SVGEllipse import SVGEllipse
-from .SVGCircle import SVGCircle
-from .SVGRect import SVGRect
-from .SVGPolygon import SVGPolygon
 from .SVGGroup import SVGGroup
-from .SVGPolyline import SVGPolyline
+from .SVGGenericElement import SVGGenericElement
+from .SVGDefs import SVGDefs
 from ._GroupElementsMixin import _GroupElementsMixin
 from ._AttrMixinWidthHeight import _AttrMixinWidthHeight
+
 
 
 
@@ -30,6 +27,9 @@ class SVGGraphic(AbstractSVGElement, _GroupElementsMixin, _AttrMixinWidthHeight)
 		self._attributes["xmlns:svg"] = "http://www.w3.org/2000/svg"
 		self._attributes["version"] = "1.1"
 
+		self.__defs = SVGDefs()
+		self._cssStyleLines = []
+
 		self.setSizeDinA4()
 	#
 
@@ -37,9 +37,56 @@ class SVGGraphic(AbstractSVGElement, _GroupElementsMixin, _AttrMixinWidthHeight)
 	## Public Properties
 	################################################################################################################################
 
+	@property
+	def defs(self) -> SVGDefs:
+		return self.__defs
+	#
+
+	@property
+	def cssStyleLines(self) -> list:
+		return self._cssStyleLines
+	#
+
+	@cssStyleLines.setter
+	def cssStyleLines(self, v:list):
+		if v is None:
+			self._cssStyleLines.clear()
+		elif isinstance(v, (list,tuple)):
+			self._cssStyleLines.clear()
+			self._cssStyleLines.extend(v)
+		else:
+			raise TypeError(type(v).__name__)
+	#
+
+	@property
+	def cssStyle(self) -> list:
+		return "\n".join(self._cssStyleLines)
+	#
+
+	@cssStyle.setter
+	def cssStyle(self, v:str):
+		v = v.strip()
+		self._cssStyleLines = v.split("\n")
+	#
+
 	################################################################################################################################
 	## Helper Methods
 	################################################################################################################################
+
+	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True):
+
+		extraChildren = []
+
+		if self._cssStyleLines:
+			svgStyle = SVGGenericElement("style")
+			svgStyle._textContent = "\n" + "\n".join(self._cssStyleLines) + "\n"
+			extraChildren.append(svgStyle)
+
+		if self.__defs._children:
+			extraChildren.append(self.__defs)
+
+		super()._toSVG(w, bPretty, extraChildren)
+	#
 
 	################################################################################################################################
 	## Public Methods

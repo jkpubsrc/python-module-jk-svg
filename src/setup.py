@@ -19,11 +19,11 @@ setup(
 	author = "Jürgen Knauth",
 	author_email = "pubsrc@binary-overflow.de",
 	classifiers = [
-		"Development Status :: 5 - Production/Stable",
+		"Development Status :: 4 - Beta",
 		"License :: OSI Approved :: Apache Software License",
 		"Programming Language :: Python :: 3",
 	],
-	description = "This python module implements a set of classes for simple programmatic creation of SVG graphics.",
+	description = "This Python module implements a set of classes for easy, programmatic generation of SVG graphics.",
 	include_package_data = False,
 	install_requires = [
 	],
@@ -35,7 +35,7 @@ setup(
 	packages = [
 		"jk_svg",
 	],
-	version = "0.2020.12.6",
+	version = "0.2020.12.28",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

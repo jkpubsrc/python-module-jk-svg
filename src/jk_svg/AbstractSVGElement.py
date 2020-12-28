@@ -3,6 +3,7 @@
 import typing
 import sys
 import inspect
+import random
 
 import jk_typing
 import jk_hwriter
@@ -26,6 +27,7 @@ def _toStr(v):
 	elif isinstance(v, int):
 		return str(v)
 	elif isinstance(v, str):
+		# TODO: perform valid XML encoding of text
 		return v
 	else:
 		return str(v)
@@ -52,9 +54,9 @@ class AbstractSVGElement(object):
 		self._tagName = tagName
 		self._attributes = {}
 		self._children = []
-		self._text = None
 		self._moveCallback = None
-		self._textContent = None
+		self._textContent = None					# NOTE: element text content will be ignored if we have children.
+		self._maskRef = None
 
 		for clazz in inspect.getmro(self.__class__):
 			if clazz.__name__.startswith("_AttrMixin"):
@@ -67,13 +69,27 @@ class AbstractSVGElement(object):
 	################################################################################################################################
 
 	@property
-	def id(self) -> str:
-		return self._attributes.get("id", 0)
+	def id(self) -> typing.Union[str,None]:
+		return self._attributes.get("id")
 	#
 
 	@id.setter
-	def id(self, v:float):
+	def id(self, v:typing.Union[str,None]):
+		if v is not None:
+			assert isinstance(v, str)
 		self._attributes["id"] = v
+	#
+
+	@property
+	def mask(self) -> typing.Union[str,None]:
+		return self._maskRef
+	#
+
+	@mask.setter
+	def mask(self, v:typing.Union[str,None]):
+		if v is not None:
+			assert isinstance(v, str)
+		self._maskRef = v
 	#
 
 	@property
@@ -96,35 +112,48 @@ class AbstractSVGElement(object):
 	################################################################################################################################
 
 	@jk_typing.checkFunctionSignature()
-	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True):
+	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True, extraChildren:list = None):
+		if extraChildren:
+			children = list(extraChildren)
+			children.extend(self._children)
+		else:
+			children = self._children
+
+		# ----
 
 		self.cleanAttributes()
 
+		attributes = dict(self._attributes)
+		if self._maskRef:
+			attributes["mask"] = "url(#" + self._maskRef + ")"
+
+		# ----
+
 		if bPretty:
-			if self._attributes:
+			if attributes:
 				w.writeLn("<" + self._tagName)
 				w.incrementIndent()
-				for key, value in self._attributes.items():
+				for key, value in attributes.items():
 					w.writeLn(key + "=\"" + _toStr(value) + "\"")
-				w.write(">" if (self._children or self._text) else "/>")
+				w.write(">" if (children or self._textContent) else "/>")
 				w.decrementIndent()
 
 			else:
 				w.write("<" + self._tagName)
-				w.write(">" if (self._children or self._text) else "/>")
+				w.write(">" if (children or self._textContent) else "/>")
 
-			if self._children:
+			if children:
 				w.writeLn()
 				w.incrementIndent()
 
-				for c in self._children:
+				for c in children:
 					c._toSVG(w, True)
 
 				w.decrementIndent()
 				w.writeLn("</" + self._tagName + ">")
 
-			elif self._text:
-				w.writeLn(self._text + "</" + self.tagName + ">")
+			elif self._textContent:
+				w.writeLn(_toStr(self._textContent) + "</" + self.tagName + ">")
 
 			else:
 				w.writeLn()
@@ -132,19 +161,19 @@ class AbstractSVGElement(object):
 		else:
 			w.write("<" + self._tagName)
 
-			for key, value in self._attributes.items():
+			for key, value in attributes.items():
 				w.write(" " + key + "=\"" + _toStr(value) + "\"")
 
-			if self._children:
+			if children:
 				w.write(">")
 
-				for c in self._children:
+				for c in children:
 					c._toSVG(w, False)
 
 				w.write("</" + self._tagName + ">")
 
-			elif self._text:
-				w.write(">" + self._text + "</" + self.tagName + ">")
+			elif self._textContent:
+				w.write(">" + _toStr(self._textContent) + "</" + self.tagName + ">")
 
 			else:
 				w.write("/>")
@@ -153,6 +182,18 @@ class AbstractSVGElement(object):
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
+
+	def generateUniqueID(self, prefix:str) -> str:
+		while True:
+			ret = prefix + str(random.randint(1, 999999))
+			bFound = False
+			for c in self._children:
+				if c.id == ret:
+					bFound = True
+					break
+			if not bFound:
+				return ret
+	#
 
 	def getBoundingPoints(self):
 		for c in self._children:

@@ -10,8 +10,8 @@
 				"name": "J\u00fcrgen Knauth"
 			}
 		],
-		"description": "This python module implements a set of classes for simple programmatic creation of SVG graphics.",
-		"development_status": "stable",
+		"description": "This Python module implements a set of classes for easy, programmatic generation of SVG graphics.",
+		"development_status": "beta",
 		"keywords": [
 			"svg"
 		],
@@ -19,7 +19,7 @@
 		"license": "Apache2",
 		"name": "jk_svg",
 		"packageClass": "python-module",
-		"version": "0.2020.12.6",
+		"version": "0.2020.12.28",
 	},
 	"repositories": [
 		{

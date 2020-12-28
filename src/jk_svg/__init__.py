@@ -1,9 +1,12 @@
 ﻿
 
 
-__version__ = "0.2020.12.6"
+__version__ = "0.2020.12.28"
 
 
+
+################################################################
+## core
 
 from .PointsList import PointsList
 
@@ -30,13 +33,16 @@ from .SVGPolygon import SVGPolygon
 from .SVGPolyline import SVGPolyline
 from .SVGPath import SVGPath
 from .SVGText import SVGText
-
+from .SVGDefs import SVGDefs
+from .SVGMask import SVGMask
 from .SVGGroup import SVGGroup
-
 from .SVGGraphic import SVGGraphic
 
+################################################################
+## extensions
 
-
+from .ext_checkerboard import createCheckerboard
+from .ext_ring import createRing
 
 
 

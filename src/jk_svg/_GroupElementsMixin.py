@@ -23,6 +23,23 @@ class _GroupElementsMixin:
 		assert isinstance(tagName, str)
 		assert tagName
 
+		if tagName == "path":
+			return self.createPath()
+		elif tagName == "line":
+			return self.createLine()
+		elif tagName == "ellipse":
+			return self.createEllipse()
+		elif tagName == "circle":
+			return self.createCircle()
+		elif tagName == "rect":
+			return self.createRect()
+		elif tagName == "polygon":
+			return self.createPolygon()
+		elif tagName == "polyline":
+			return self.createPolyline()
+		elif tagName == "text":
+			return self.createText()
+
 		ret = SVGGenericElement(tagName)
 		self._children.append(ret)
 		return ret

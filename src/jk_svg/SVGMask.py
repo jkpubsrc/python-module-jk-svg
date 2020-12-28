@@ -9,35 +9,24 @@ from .AbstractSVGElement import AbstractSVGElement
 
 from ._AttrMixinStyle import _AttrMixinStyle
 from ._GroupElementsMixin import _GroupElementsMixin
-from .Transformer import Transformer
-from .SVGMask import SVGMask
 
 
 
 
 
-
-class SVGGroup(AbstractSVGElement, _AttrMixinStyle, _GroupElementsMixin):
+class SVGMask(AbstractSVGElement, _GroupElementsMixin):
 
 	################################################################################################################################
 	## Constructor
 	################################################################################################################################
 
 	def __init__(self):
-		super().__init__("g")
-
-		self.__transformer = Transformer(self._attributes.get("transform"))
-		self.__transformer._connectedSVGControl = self
+		super().__init__("mask")
 	#
 
 	################################################################################################################################
 	## Public Properties
 	################################################################################################################################
-
-	@property
-	def transform(self) -> Transformer:
-		return self.__transformer
-	#
 
 	################################################################################################################################
 	## Helper Methods
@@ -46,18 +35,6 @@ class SVGGroup(AbstractSVGElement, _AttrMixinStyle, _GroupElementsMixin):
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
-
-	def createGroup(self):
-		ret = SVGGroup()
-		self._children.append(ret)
-		return ret
-	#
-
-	def createMask(self):
-		ret = SVGMask()
-		self._children.append(ret)
-		return ret
-	#
 
 #
 
