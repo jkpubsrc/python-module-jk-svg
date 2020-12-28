@@ -9,12 +9,14 @@ from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinXY import _AttrMixinXY
 from ._AttrMixinStyle import _AttrMixinStyle
 from ._AttrMixinClass import _AttrMixinClass
+from ._AttrMixinTextContent import _AttrMixinTextContent
 
 
 
 
 
-class SVGText(AbstractSVGElement, _AttrMixinXY, _AttrMixinStyle, _AttrMixinClass):
+
+class SVGText(AbstractSVGElement, _AttrMixinXY, _AttrMixinStyle, _AttrMixinClass, _AttrMixinTextContent):
 
 	################################################################################################################################
 	## Constructor

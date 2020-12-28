@@ -19,7 +19,7 @@ class _AttrMixinClass:
 
 	@clazz.setter
 	def clazz(self, v:str):
-		self._attributes["clazz"] = v
+		self._attributes["class"] = v
 	#
 
 #

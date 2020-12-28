@@ -54,6 +54,7 @@ class AbstractSVGElement(object):
 		self._children = []
 		self._text = None
 		self._moveCallback = None
+		self._textContent = None
 
 		for clazz in inspect.getmro(self.__class__):
 			if clazz.__name__.startswith("_AttrMixin"):
