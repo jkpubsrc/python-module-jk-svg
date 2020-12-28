@@ -3,7 +3,7 @@
 
 
 from .AbstractSVGElement import AbstractSVGElement
-from .SVGElement import SVGElement
+from .SVGGenericElement import SVGGenericElement
 from .SVGLine import SVGLine
 from .SVGEllipse import SVGEllipse
 from .SVGCircle import SVGCircle
@@ -11,17 +11,19 @@ from .SVGRect import SVGRect
 from .SVGPolygon import SVGPolygon
 from .SVGPolyline import SVGPolyline
 from .SVGPath import SVGPath
+from .SVGText import SVGText
+
 
 
 
 
 class _GroupElementsMixin:
 
-	def createElement(self, tagName:str) -> SVGElement:
+	def createElement(self, tagName:str) -> SVGGenericElement:
 		assert isinstance(tagName, str)
 		assert tagName
 
-		ret = SVGElement(tagName)
+		ret = SVGGenericElement(tagName)
 		self._children.append(ret)
 		return ret
 	#
@@ -64,6 +66,12 @@ class _GroupElementsMixin:
 
 	def createPolyline(self) -> SVGPolyline:
 		ret = SVGPolyline()
+		self._children.append(ret)
+		return ret
+	#
+
+	def createText(self) -> SVGText:
+		ret = SVGText()
 		self._children.append(ret)
 		return ret
 	#

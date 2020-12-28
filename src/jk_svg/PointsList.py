@@ -5,6 +5,10 @@
 
 class PointsList(list):
 
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self, v = None):
 		super().__init__()
 
@@ -18,6 +22,29 @@ class PointsList(list):
 			else:
 				raise Exception("Unknown: " + str(type(v)))
 	#
+
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	def __parseAddPoints(self, s:str):
+		sPoints = s.spit(" ")
+		for sPoint in sPoints:
+			if sPoint:
+				sX, sY = sPoint.split(",")
+				super().append((float(sX), float(sY)))
+
+		if self._connectedSVGControl is not None:
+			self._connectedSVGControl.attributes["points"] = str(self)
+	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
 
 	def commit(self):
 		if self._connectedSVGControl is not None:
@@ -134,17 +161,6 @@ class PointsList(list):
 		return " ".join([
 			(str(vx) + "," + str(vy)) for vx, vy in self
 		])
-	#
-
-	def __parseAddPoints(self, s:str):
-		sPoints = s.spit(" ")
-		for sPoint in sPoints:
-			if sPoint:
-				sX, sY = sPoint.split(",")
-				super().append((float(sX), float(sY)))
-
-		if self._connectedSVGControl is not None:
-			self._connectedSVGControl.attributes["points"] = str(self)
 	#
 
 #

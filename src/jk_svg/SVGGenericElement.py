@@ -6,22 +6,18 @@ import jk_typing
 import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
-from ._AttrMixinPoints import _AttrMixinPoints
 from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
-
-class SVGPolyline(AbstractSVGElement, _AttrMixinPoints, _AttrMixinStyle):
+class SVGGenericElement(AbstractSVGElement, _AttrMixinStyle):
 
 	################################################################################################################################
 	## Constructor
 	################################################################################################################################
 
-	def __init__(self):
-		super().__init__("polyline")
-
-		self._init_AttrMixinPoints()
+	def __init__(self, tagName:str):
+		super().__init__(tagName)
 	#
 
 	################################################################################################################################
@@ -35,12 +31,6 @@ class SVGPolyline(AbstractSVGElement, _AttrMixinPoints, _AttrMixinStyle):
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
-
-	def getBoundingPoints(self):
-		yield from super().getBoundingPoints()
-		for cx, cy in self._points:
-			yield cx, cy
-	#
 
 #
 

@@ -13,7 +13,36 @@ from .BoundingBox import BoundingBox
 
 
 
+
+
+
+
+def _toStr(v):
+	if isinstance(v, float):
+		s = list("{:.14f}".format(v))			# NOTE: It doesn't make much sense to have a larger precision as typically floating point numbers are IEEE 754 format only.
+		while s[-1] == "0":
+			del s[-1]
+		return "".join(s)
+	elif isinstance(v, int):
+		return str(v)
+	elif isinstance(v, str):
+		return v
+	else:
+		return str(v)
+#
+
+
+
+
+
+
+
+
 class AbstractSVGElement(object):
+
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
 
 	@jk_typing.checkFunctionSignature()
 	def __init__(self, tagName:str = None):
@@ -31,6 +60,10 @@ class AbstractSVGElement(object):
 				if hasattr(clazz, "_init" + clazz.__name__):
 					getattr(clazz, "_init" + clazz.__name__)(self)
 	#
+
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
 
 	@property
 	def id(self) -> str:
@@ -57,30 +90,9 @@ class AbstractSVGElement(object):
 		return self._children
 	#
 
-	def getBoundingPoints(self):
-		for c in self._children:
-			yield from c.getBoundingPoints()
-	#
-
-	def move(self, dx:float, dy:float):
-		if self._moveCallback:
-			self._moveCallback(dx, dy)
-		for c in self._children:
-			c.move(dx, dy)
-	#
-
-	def toSVG(self, bPretty:bool = True) -> str:
-		w = jk_hwriter.HWriter()
-		self._toSVG(w, bPretty)
-		return str(w)
-	#
-
-	def cleanAttributes(self):
-		for key in list(self._attributes.keys()):
-			a = self._attributes[key]
-			if (a is None) or (a is ""):
-				del self._attributes[key]
-	#
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
 
 	@jk_typing.checkFunctionSignature()
 	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True):
@@ -92,7 +104,7 @@ class AbstractSVGElement(object):
 				w.writeLn("<" + self._tagName)
 				w.incrementIndent()
 				for key, value in self._attributes.items():
-					w.writeLn(key + "=\"" + str(value) + "\"")
+					w.writeLn(key + "=\"" + _toStr(value) + "\"")
 				w.write(">" if (self._children or self._text) else "/>")
 				w.decrementIndent()
 
@@ -120,7 +132,7 @@ class AbstractSVGElement(object):
 			w.write("<" + self._tagName)
 
 			for key, value in self._attributes.items():
-				w.write(" " + key + "=\"" + str(value) + "\"")
+				w.write(" " + key + "=\"" + _toStr(value) + "\"")
 
 			if self._children:
 				w.write(">")
@@ -135,6 +147,35 @@ class AbstractSVGElement(object):
 
 			else:
 				w.write("/>")
+	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
+
+	def getBoundingPoints(self):
+		for c in self._children:
+			yield from c.getBoundingPoints()
+	#
+
+	def move(self, dx:float, dy:float):
+		if self._moveCallback:
+			self._moveCallback(dx, dy)
+		for c in self._children:
+			c.move(dx, dy)
+	#
+
+	def toSVG(self, bPretty:bool = True) -> str:
+		w = jk_hwriter.HWriter()
+		self._toSVG(w, bPretty)
+		return str(w)
+	#
+
+	def cleanAttributes(self):
+		for key in list(self._attributes.keys()):
+			a = self._attributes[key]
+			if (a is None) or (a is ""):
+				del self._attributes[key]
 	#
 
 	def getBoundingBox(self) -> typing.Union[BoundingBox,None]:

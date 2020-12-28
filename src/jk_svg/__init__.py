@@ -21,7 +21,7 @@ from ._GroupElementsMixin import _GroupElementsMixin
 
 from .AbstractSVGElement import AbstractSVGElement
 
-from .SVGElement import SVGElement
+from .SVGGenericElement import SVGGenericElement
 from .SVGLine import SVGLine
 from .SVGEllipse import SVGEllipse
 from .SVGCircle import SVGCircle
@@ -29,6 +29,7 @@ from .SVGRect import SVGRect
 from .SVGPolygon import SVGPolygon
 from .SVGPolyline import SVGPolyline
 from .SVGPath import SVGPath
+from .SVGText import SVGText
 
 from .SVGGroup import SVGGroup
 

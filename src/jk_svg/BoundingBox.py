@@ -19,6 +19,10 @@ class BoundingBox(tuple):
 
 class BoundingBox(object):
 
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self, *args):
 		if len(args) == 1:
 			args = list(args[0])
@@ -39,6 +43,10 @@ class BoundingBox(object):
 		self.__minY = minY
 		self.__maxY = maxY
 	#
+
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
 
 	@property
 	def x(self) -> float:
@@ -103,6 +111,14 @@ class BoundingBox(object):
 		assert isinstance(v, (float, int))
 		self.__maxY = v
 	#
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
 
 	def __getitem__(self, index):
 		assert isinstance(index, int)
@@ -183,6 +199,29 @@ class BoundingBox(object):
 			return None
 	#
 
+	def expand(self, *args):
+		if len(args) == 1:
+			assert isinstance(args[0], (float, int))
+			nLeft = nTop = nRight = nBottom = args[0]
+		elif len(args) == 4:
+			nLeft, nTop, nRight, nBottom = args
+			assert isinstance(nLeft, (float, int))
+			assert isinstance(nTop, (float, int))
+			assert isinstance(nRight, (float, int))
+			assert isinstance(nBottom, (float, int))
+		else:
+			raise Exception("Arguments invalid!")
+
+		self.__minX -= nLeft
+		self.__maxX += nRight
+		self.__minY -= nTop
+		self.__maxY += nBottom
+	#
+
+	################################################################################################################################
+	## Static Methods
+	################################################################################################################################
+
 	@staticmethod
 	def uniteMany(*args):
 		for arg in args:
@@ -210,25 +249,6 @@ class BoundingBox(object):
 			return BoundingBox(minX, minY, maxX, maxY)
 		else:
 			return None
-	#
-
-	def expand(self, *args):
-		if len(args) == 1:
-			assert isinstance(args[0], (float, int))
-			nLeft = nTop = nRight = nBottom = args[0]
-		elif len(args) == 4:
-			nLeft, nTop, nRight, nBottom = args
-			assert isinstance(nLeft, (float, int))
-			assert isinstance(nTop, (float, int))
-			assert isinstance(nRight, (float, int))
-			assert isinstance(nBottom, (float, int))
-		else:
-			raise Exception("Arguments invalid!")
-
-		self.__minX -= nLeft
-		self.__maxX += nRight
-		self.__minY -= nTop
-		self.__maxY += nBottom
 	#
 
 #

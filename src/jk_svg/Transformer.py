@@ -8,6 +8,10 @@ class Transformer(object):
 
 	__slots__ = [ "_connectedSVGControl", "__translation", "__scaling" ]
 
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self, v = None):
 		super().__init__()
 
@@ -25,6 +29,10 @@ class Transformer(object):
 			else:
 				raise Exception("Unknown: " + str(type(v)))
 	#
+
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
 
 	@property
 	def translateX(self) -> float:
@@ -78,26 +86,9 @@ class Transformer(object):
 		self.commit()
 	#
 
-	def commit(self):
-		if self._connectedSVGControl is not None:
-			self._connectedSVGControl.attributes["transform"] = str(self)
-	#
-
-	def reset(self):
-		self.__translation = [ 0, 0 ]
-		self.__scaling = [ 1, 1 ]
-
-		self.commit()
-	#
-
-	def copy(self):
-		return Transformer(self)
-	#
-
-	def __str__(self):
-		return "translate({} {})".format(self.__translation[0], self.__translation[1]) \
-			+ " scale({} {})".format(self.__scaling[0], self.__scaling[1])
-	#
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
 
 	def __parseFromStr(self, s:str):
 		for m in re.finditer("(translate|scale)\(([^\)]+)\)", s):
@@ -114,6 +105,31 @@ class Transformer(object):
 
 		if self._connectedSVGControl is not None:
 			self._connectedSVGControl.attributes["transform"] = str(self)
+	#
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
+
+	def commit(self):
+		if self._connectedSVGControl is not None:
+			self._connectedSVGControl.attributes["transform"] = str(self)
+	#
+
+	def reset(self):
+		self.__translation = [ 0, 0 ]
+		self.__scaling = [ 1, 1 ]
+
+		self.commit()
+	#
+
+	def clone(self):
+		return Transformer(self)
+	#
+
+	def __str__(self):
+		return "translate({} {})".format(self.__translation[0], self.__translation[1]) \
+			+ " scale({} {})".format(self.__scaling[0], self.__scaling[1])
 	#
 
 #

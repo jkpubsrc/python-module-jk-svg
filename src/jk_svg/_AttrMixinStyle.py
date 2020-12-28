@@ -18,7 +18,7 @@ class _AttrMixinStyle:
 	#
 
 	@style.setter
-	def style(self, v:float):
+	def style(self, v:str):
 		self._attributes["style"] = v
 	#
 
