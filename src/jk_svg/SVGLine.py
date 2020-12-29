@@ -40,6 +40,17 @@ class SVGLine(AbstractSVGElement, _AttrMixinX1Y1X2Y2, _AttrMixinStyle):
 		yield self.x2, self.y2
 	#
 
+	def setBounds(self, x, y, width, height):
+		self.x1 = x
+		self.y1 = y
+		self.x2 = x + width
+		self.y2 = y + height
+	#
+
+	def getBounds(self) -> list:
+		return [ self.x1, self.y1, self.x2 - self.x1, self.y2 - self.y1 ]
+	#
+
 #
 
 

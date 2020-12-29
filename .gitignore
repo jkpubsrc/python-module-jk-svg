@@ -8,3 +8,4 @@ examples/**/__pycache__/
 examples/*.log
 experiments/
 testing/*.py.svg
+testing/*.output.svg

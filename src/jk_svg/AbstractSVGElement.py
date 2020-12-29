@@ -21,7 +21,7 @@ from .BoundingBox import BoundingBox
 def _toStr(v):
 	if isinstance(v, float):
 		s = list("{:.14f}".format(v))			# NOTE: It doesn't make much sense to have a larger precision as typically floating point numbers are IEEE 754 format only.
-		while s[-1] == "0":
+		while (s[-1] == "0") and (s[-2] != "."):
 			del s[-1]
 		return "".join(s)
 	elif isinstance(v, int):
@@ -39,8 +39,23 @@ def _toStr(v):
 
 
 
-
 class AbstractSVGElement(object):
+
+	_SORT_ATTRIBUTES_KEY_MAP = {
+		"x":		"_1_x",
+		"y":		"_1_y",
+		"width":	"_2_w",
+		"height":	"_3_h",
+		"x1":		"_4_x1",
+		"y1":		"_4_y1",
+		"x2":		"_5_x2",
+		"y2":		"_5_y2",
+		"cx":		"_6_cx",
+		"cy":		"_6_cy",
+		"r":		"_7_r",
+		"rx":		"_8_rx",
+		"ry":		"_8_ry",
+	}
 
 	################################################################################################################################
 	## Constructor
@@ -51,12 +66,13 @@ class AbstractSVGElement(object):
 		if not tagName:
 			raise Exception("tagName missing")
 
-		self._tagName = tagName
-		self._attributes = {}
-		self._children = []
-		self._moveCallback = None
-		self._textContent = None					# NOTE: element text content will be ignored if we have children.
-		self._maskRef = None
+		self._tagName = tagName						# str | the name of the SVG element
+		self._attributes = {}						# str->any | the attributes of this SVG element
+		self._children = []							# AbstractSVGElement[] | nested elements
+		self._moveCallback = None					# callable | 
+		self._textContent = None					# str | NOTE: element text content will be ignored if we have children.
+		self._maskRef = None						# str | if set: stores a reference to a mask
+		self._comment = None						# str | if set: a comment that is to be placed before a comonent in the output
 
 		for clazz in inspect.getmro(self.__class__):
 			if clazz.__name__.startswith("_AttrMixin"):
@@ -78,6 +94,18 @@ class AbstractSVGElement(object):
 		if v is not None:
 			assert isinstance(v, str)
 		self._attributes["id"] = v
+	#
+
+	@property
+	def comment(self) -> typing.Union[str,None]:
+		return self._comment
+	#
+
+	@comment.setter
+	def comment(self, v:typing.Union[str,None]):
+		if v is not None:
+			assert isinstance(v, str)
+		self._comment = v
 	#
 
 	@property
@@ -111,29 +139,65 @@ class AbstractSVGElement(object):
 	## Helper Methods
 	################################################################################################################################
 
+	def __sortAttributes(self, attributesDict:dict) -> list:
+		sortedKeys = sorted(attributesDict.keys(), key=lambda x: AbstractSVGElement._SORT_ATTRIBUTES_KEY_MAP.get(x, x))
+		return [ (k,attributesDict[k]) for k in sortedKeys ]
+	#
+
 	@jk_typing.checkFunctionSignature()
 	def _toSVG(self, w:jk_hwriter.HWriter, bPretty:bool = True, extraChildren:list = None):
+		# ---- get children list
+
 		if extraChildren:
 			children = list(extraChildren)
 			children.extend(self._children)
 		else:
 			children = self._children
 
-		# ----
+		# ---- prepare attributes
 
 		self.cleanAttributes()
 
-		attributes = dict(self._attributes)
+		attributesMap = dict(self._attributes)
 		if self._maskRef:
-			attributes["mask"] = "url(#" + self._maskRef + ")"
+			attributesMap["mask"] = "url(#" + self._maskRef + ")"
+		sortedAttributes = self.__sortAttributes(attributesMap)
 
-		# ----
+		# ---- write comment
 
 		if bPretty:
-			if attributes:
+			if self._comment:
+				w.writeLn("<!-- " + self._comment + " -->")
+
+		# ---- determine output mode
+
+		bPrettyCompact = bPretty and not self._children
+
+		# ---- write regular output
+
+		if bPrettyCompact:
+			# pretty, but no children
+
+			w.write("<" + self._tagName)
+
+			if sortedAttributes:
+				for key, value in sortedAttributes:
+					w.write("\t" + key + "=\"" + _toStr(value) + "\"")
+				w.write("\t")
+
+			if self._textContent:
+				w.writeLn(">" + _toStr(self._textContent) + "</" + self.tagName + ">")
+
+			else:
+				w.writeLn("/>")
+
+		elif bPretty:
+			# pretty, possibly with children
+
+			if sortedAttributes:
 				w.writeLn("<" + self._tagName)
 				w.incrementIndent()
-				for key, value in attributes.items():
+				for key, value in sortedAttributes:
 					w.writeLn(key + "=\"" + _toStr(value) + "\"")
 				w.write(">" if (children or self._textContent) else "/>")
 				w.decrementIndent()
@@ -159,9 +223,11 @@ class AbstractSVGElement(object):
 				w.writeLn()
 
 		else:
+			# optimized output for non-humans
+
 			w.write("<" + self._tagName)
 
-			for key, value in attributes.items():
+			for key, value in sortedAttributes:
 				w.write(" " + key + "=\"" + _toStr(value) + "\"")
 
 			if children:

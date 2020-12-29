@@ -6,7 +6,8 @@ __version__ = "0.2020.12.28"
 
 
 ################################################################
-## core
+
+from .UnitValue import UnitValue
 
 from .PointsList import PointsList
 
@@ -20,6 +21,7 @@ from ._AttrMixinStyle import _AttrMixinStyle
 from ._AttrMixinWidthHeight import _AttrMixinWidthHeight
 from ._AttrMixinX1Y1X2Y2 import _AttrMixinX1Y1X2Y2
 from ._AttrMixinXY import _AttrMixinXY
+from ._AttrMixinMaskContentUnits import _AttrMixinMaskContentUnits
 from ._GroupElementsMixin import _GroupElementsMixin
 
 from .AbstractSVGElement import AbstractSVGElement
@@ -39,10 +41,6 @@ from .SVGGroup import SVGGroup
 from .SVGGraphic import SVGGraphic
 
 ################################################################
-## extensions
-
-from .ext_checkerboard import createCheckerboard
-from .ext_ring import createRing
 
 
 

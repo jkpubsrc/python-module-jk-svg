@@ -42,6 +42,21 @@ class SVGCircle(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinR, _AttrMixinStyle
 		yield self.cx, self.cy + self.r
 	#
 
+	def setBounds(self, x, y, width, height):
+		rx = width / 2
+		ry = height / 2
+		self.r = min(rx, ry)
+		self.cx = x + self.r
+		self.cy = y + self.r
+	#
+
+	def getBounds(self) -> list:
+		x = self.cx - self.r
+		y = self.cy - self.r
+		wh = self.r * 2
+		return [ x, y, wh, wh ]
+	#
+
 #
 
 

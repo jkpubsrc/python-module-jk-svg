@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 
-
+import jk_utils
 
 from jk_svg import *
 
@@ -42,9 +42,11 @@ with svg.createGroup() as g:
 		poly.points.append( (0, 80) )
 		poly.move(100, 100)
 
+
+
 # ----
 
-svg.writeToFile("test2.svg")
+svg.writeToFile(jk_utils.fsutils.getFileNameWithoutExtension(__file__) + ".output.svg")
 
 
 

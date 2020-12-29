@@ -9,6 +9,8 @@ from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinXY import _AttrMixinXY
 from ._AttrMixinWidthHeight import _AttrMixinWidthHeight
 from ._AttrMixinStyle import _AttrMixinStyle
+from .BoundingBox import BoundingBox
+
 
 
 
@@ -44,6 +46,17 @@ class SVGRect(AbstractSVGElement, _AttrMixinXY, _AttrMixinWidthHeight, _AttrMixi
 		yield x1, y2
 		yield x2, y1
 		yield x2, y2
+	#
+
+	def setBounds(self, x, y, width, height):
+		self.x = x
+		self.y = y
+		self.width = width
+		self.height = height
+	#
+
+	def getBounds(self) -> list:
+		return [ self.x, self.y, self.width, self.height ]
 	#
 
 #

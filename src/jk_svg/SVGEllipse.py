@@ -43,6 +43,21 @@ class SVGEllipse(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinRXRY, _AttrMixinS
 		yield self.cx, self.cy + self.ry
 	#
 
+	def setBounds(self, x, y, width, height):
+		self.rx = width / 2
+		self.cx = x + self.rx
+		self.ry = height / 2
+		self.cy = y + self.ry
+	#
+
+	def getBounds(self) -> list:
+		x = self.cx - self.rx
+		y = self.cy - self.ry
+		w = self.rx * 2
+		h = self.ry * 2
+		return [ x, y, w, h ]
+	#
+
 #
 
 

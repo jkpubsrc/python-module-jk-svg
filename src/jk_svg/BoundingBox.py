@@ -1,6 +1,14 @@
 
 
 
+
+import jk_utils
+
+from .UnitValue import UnitValue
+
+
+
+
 """
 class BoundingBox(tuple):
 
@@ -33,10 +41,10 @@ class BoundingBox(object):
 			raise Exception("Arguments invalid!")
 
 		minX, minY, maxX, maxY = args
-		assert isinstance(minX, (float, int))
-		assert isinstance(minY, (float, int))
-		assert isinstance(maxX, (float, int))
-		assert isinstance(maxY, (float, int))
+		assert isinstance(minX, (float, int, UnitValue))
+		assert isinstance(minY, (float, int, UnitValue))
+		assert isinstance(maxX, (float, int, UnitValue))
+		assert isinstance(maxY, (float, int, UnitValue))
 
 		self.__minX = minX
 		self.__maxX = maxX
@@ -125,7 +133,15 @@ class BoundingBox(object):
 		if (index < 0) and (index > -4):
 			index = index % 4
 		assert index in ( 0, 1, 2, 3 )
-		return self.__data[index]
+		if index == 0:
+			return self.__minX
+		if index == 1:
+			return self.__minY
+		if index == 2:
+			return self.__maxX
+		if index == 3:
+			return self.__maxY
+		raise jk_utils.ImplementationError()
 	#
 
 	def __setitem__(self, index, value):
@@ -134,7 +150,15 @@ class BoundingBox(object):
 			index = index % 4
 		assert index in ( 0, 1, 2, 3 )
 		assert isinstance(value, (float, int))
-		self.__data[index] = value
+		if index == 0:
+			self.__minX = value
+		if index == 1:
+			self.__minY = value
+		if index == 2:
+			self.__maxX = value
+		if index == 3:
+			self.__maxY = value
+		raise jk_utils.ImplementationError()
 	#
 
 	def __str__(self):
@@ -201,14 +225,14 @@ class BoundingBox(object):
 
 	def expand(self, *args):
 		if len(args) == 1:
-			assert isinstance(args[0], (float, int))
+			assert isinstance(args[0], (float, int, UnitValue))
 			nLeft = nTop = nRight = nBottom = args[0]
 		elif len(args) == 4:
 			nLeft, nTop, nRight, nBottom = args
-			assert isinstance(nLeft, (float, int))
-			assert isinstance(nTop, (float, int))
-			assert isinstance(nRight, (float, int))
-			assert isinstance(nBottom, (float, int))
+			assert isinstance(nLeft, (float, int, UnitValue))
+			assert isinstance(nTop, (float, int, UnitValue))
+			assert isinstance(nRight, (float, int, UnitValue))
+			assert isinstance(nBottom, (float, int, UnitValue))
 		else:
 			raise Exception("Arguments invalid!")
 

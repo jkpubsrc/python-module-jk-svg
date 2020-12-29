@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 
-
+import jk_utils
 
 from jk_svg import *
 
@@ -57,7 +57,11 @@ with gBackground.createRect() as rect:
 	rect.width = bounds[2] - bounds[0] + 100
 	rect.height = bounds[3] - bounds[1] + 100
 
-svg.writeToFile("test2.svg")
+
+
+# ----
+
+svg.writeToFile(jk_utils.fsutils.getFileNameWithoutExtension(__file__) + ".output.svg")
 
 
 
