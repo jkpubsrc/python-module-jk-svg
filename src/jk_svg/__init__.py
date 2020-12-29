@@ -1,7 +1,7 @@
 ﻿
 
 
-__version__ = "0.2020.12.28"
+__version__ = "0.2020.12.29"
 
 
 
@@ -41,7 +41,6 @@ from .SVGGroup import SVGGroup
 from .SVGGraphic import SVGGraphic
 
 ################################################################
-
 
 
 
