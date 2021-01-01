@@ -35,7 +35,7 @@ setup(
 	packages = [
 		"jk_svg",
 	],
-	version = "0.2020.12.29",
+	version = "0.2021.1.2",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",
