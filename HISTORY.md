@@ -8,3 +8,11 @@
 * Improved: Implementation `createCheckerBoard()`
 * Improved: Output of attributes presents them in a well defined, very well sorted order
 
+2020-12-31
+
+* Added: Argument `bWithXMLDeclaration` for `SVGGraphic.toSVG()`
+
+2021-01-01
+
+* Reorganization of source code
+

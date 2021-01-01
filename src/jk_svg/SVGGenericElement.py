@@ -6,11 +6,12 @@ import jk_typing
 import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
-class SVGGenericElement(AbstractSVGElement, _AttrMixinStyle):
+
+
+class SVGGenericElement(AbstractSVGElement):
 
 	################################################################################################################################
 	## Constructor

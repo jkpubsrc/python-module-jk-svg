@@ -9,6 +9,8 @@ import jk_typing
 import jk_hwriter
 
 from .BoundingBox import BoundingBox
+from ._AttrMixinStyle import _AttrMixinStyle
+from ._AttrMixinClass import _AttrMixinClass
 
 
 
@@ -39,7 +41,7 @@ def _toStr(v):
 
 
 
-class AbstractSVGElement(object):
+class AbstractSVGElement(_AttrMixinStyle, _AttrMixinClass):
 
 	_SORT_ATTRIBUTES_KEY_MAP = {
 		"x":		"_1_x",

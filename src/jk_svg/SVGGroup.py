@@ -7,7 +7,6 @@ import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
 
-from ._AttrMixinStyle import _AttrMixinStyle
 from ._GroupElementsMixin import _GroupElementsMixin
 from .Transformer import Transformer
 from .SVGMask import SVGMask
@@ -17,7 +16,7 @@ from .SVGMask import SVGMask
 
 
 
-class SVGGroup(AbstractSVGElement, _AttrMixinStyle, _GroupElementsMixin):
+class SVGGroup(AbstractSVGElement, _GroupElementsMixin):
 
 	################################################################################################################################
 	## Constructor

@@ -7,8 +7,6 @@ import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinXY import _AttrMixinXY
-from ._AttrMixinStyle import _AttrMixinStyle
-from ._AttrMixinClass import _AttrMixinClass
 from ._AttrMixinTextContent import _AttrMixinTextContent
 
 
@@ -16,7 +14,7 @@ from ._AttrMixinTextContent import _AttrMixinTextContent
 
 
 
-class SVGText(AbstractSVGElement, _AttrMixinXY, _AttrMixinStyle, _AttrMixinClass, _AttrMixinTextContent):
+class SVGText(AbstractSVGElement, _AttrMixinXY, _AttrMixinTextContent):
 
 	################################################################################################################################
 	## Constructor

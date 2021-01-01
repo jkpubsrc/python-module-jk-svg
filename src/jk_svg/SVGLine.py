@@ -7,12 +7,12 @@ import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinX1Y1X2Y2 import _AttrMixinX1Y1X2Y2
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
 
-class SVGLine(AbstractSVGElement, _AttrMixinX1Y1X2Y2, _AttrMixinStyle):
+
+class SVGLine(AbstractSVGElement, _AttrMixinX1Y1X2Y2):
 
 	################################################################################################################################
 	## Constructor

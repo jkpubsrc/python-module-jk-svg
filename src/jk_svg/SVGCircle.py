@@ -8,11 +8,11 @@ import jk_hwriter
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinCXCY import _AttrMixinCXCY
 from ._AttrMixinR import _AttrMixinR
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
-class SVGCircle(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinR, _AttrMixinStyle):
+
+class SVGCircle(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinR):
 
 	################################################################################################################################
 	## Constructor

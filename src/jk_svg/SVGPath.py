@@ -8,12 +8,12 @@ import jk_hwriter
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinCXCY import _AttrMixinCXCY
 from ._AttrMixinRXRY import _AttrMixinRXRY
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
 
-class SVGPath(AbstractSVGElement, _AttrMixinStyle):
+
+class SVGPath(AbstractSVGElement):
 
 	################################################################################################################################
 	## Constructor

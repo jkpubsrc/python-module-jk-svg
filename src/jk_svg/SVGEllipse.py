@@ -8,12 +8,12 @@ import jk_hwriter
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinCXCY import _AttrMixinCXCY
 from ._AttrMixinRXRY import _AttrMixinRXRY
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
 
-class SVGEllipse(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinRXRY, _AttrMixinStyle):
+
+class SVGEllipse(AbstractSVGElement, _AttrMixinCXCY, _AttrMixinRXRY):
 
 	################################################################################################################################
 	## Constructor

@@ -8,7 +8,6 @@ import jk_hwriter
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinXY import _AttrMixinXY
 from ._AttrMixinWidthHeight import _AttrMixinWidthHeight
-from ._AttrMixinStyle import _AttrMixinStyle
 from .BoundingBox import BoundingBox
 
 
@@ -16,7 +15,7 @@ from .BoundingBox import BoundingBox
 
 
 
-class SVGRect(AbstractSVGElement, _AttrMixinXY, _AttrMixinWidthHeight, _AttrMixinStyle):
+class SVGRect(AbstractSVGElement, _AttrMixinXY, _AttrMixinWidthHeight):
 
 	################################################################################################################################
 	## Constructor

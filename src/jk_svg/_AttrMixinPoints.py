@@ -5,8 +5,8 @@ import typing
 import jk_typing
 import jk_hwriter
 
-from .AbstractSVGElement import AbstractSVGElement
 from .PointsList import PointsList
+
 
 
 

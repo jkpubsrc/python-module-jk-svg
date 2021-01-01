@@ -7,7 +7,6 @@ import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
 
-from ._AttrMixinStyle import _AttrMixinStyle
 from ._GroupElementsMixin import _GroupElementsMixin
 from .SVGGroup import SVGGroup
 from .SVGMask import SVGMask

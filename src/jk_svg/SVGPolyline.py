@@ -7,12 +7,12 @@ import jk_hwriter
 
 from .AbstractSVGElement import AbstractSVGElement
 from ._AttrMixinPoints import _AttrMixinPoints
-from ._AttrMixinStyle import _AttrMixinStyle
 
 
 
 
-class SVGPolyline(AbstractSVGElement, _AttrMixinPoints, _AttrMixinStyle):
+
+class SVGPolyline(AbstractSVGElement, _AttrMixinPoints):
 
 	################################################################################################################################
 	## Constructor

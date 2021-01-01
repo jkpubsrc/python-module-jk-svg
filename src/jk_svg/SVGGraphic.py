@@ -142,11 +142,12 @@ class SVGGraphic(AbstractSVGElement, _GroupElementsMixin, _AttrMixinWidthHeight)
 		self._attributes["height"] = "52mm"
 	#
 
-	def toSVG(self, bPretty:bool = True) -> str:
+	def toSVG(self, bPretty:bool = True, bWithXMLDeclaration:bool = True) -> str:
 		w = jk_hwriter.HWriter()
-		w.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>")
-		if bPretty:
-			w.writeLn()
+		if bWithXMLDeclaration:
+			w.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>")
+			if bPretty:
+				w.writeLn()
 		self._toSVG(w, bPretty)
 		return str(w)
 	#
