@@ -8,7 +8,7 @@ This python module implements a set of classes for easy programmatic create of S
 
 Information about this module can be found here:
 
-* [github.org](https://github.com/jkpubsrc/....)
+* [github.com](https://github.com/jkpubsrc/python-module-jk-svg)
 * [pypi.python.org](https://pypi.python.org/pypi/jk_svg)
 
 Why this module?
